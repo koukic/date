@@ -1,7 +1,7 @@
 <ul class="list-unstyled">
   <% chats.each do |chat| %>
     <li class="media mb-3">
-      <img class="mr-2 rounded" src="<%= gravatar_url(micropost.user, { size: 50 }) %>" alt="">
+      <img class="mr-2 rounded" src="<%= gravatar_url(chat.user, { size: 50 }) %>" alt="">
       <div class="media-body">
         <div>
           <%= link_to chat.user.name, user_path(chat.user) %> <span class="text-muted">posted at <%= chat.created_at %></span>

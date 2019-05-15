@@ -8,7 +8,7 @@ class ChatsController < ApplicationController
       flash[:success] = 'メッセージを送信しました。'
       redirect_to root_url
     else
-      @chats = current_user.chats.order(id: :desc).page(params[:page])
+      @chats = current_user.feed_chats.order(id: :desc).page(params[:page])
       flash.now[:danger] = 'メッセージの送信に失敗しました。'
       render 'toppages/index'
     end
@@ -24,5 +24,12 @@ class ChatsController < ApplicationController
 
   def chat_params
     params.require(:chat).permit(:content)
+  end
+  
+  def correct_user
+    @chat = current_user.chats.find_by(id: params[:id])
+    unless @chat
+      redirect_to root_url
+    end
   end
 end
