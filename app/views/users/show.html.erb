@@ -8,5 +8,6 @@
         <img class="rounded img-fluid" src="<%= gravatar_url(@user, { size: 500 }) %>" alt="">
       </div>
     </div>
+    <%= render 'relationships/follow_button', user: @user %>
   </aside>
 </div>
