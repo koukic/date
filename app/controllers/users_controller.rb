@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :require_user_logged_in, only: [:index, :show]
   def index
     @users = User.order(id: :desc).page(params[:page]).per(25)
   end
@@ -24,6 +25,11 @@ class UsersController < ApplicationController
   end
 
   def destroy
+    @user = User.find(params[:id])
+    @user.destroy
+
+    flash[:success] = 'アカウントは正常に削除されました'
+    redirect_to users_url
   end
   
   private
