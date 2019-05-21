@@ -5,9 +5,34 @@
         <h3 class="card-title"><%= @user.name %></h3>
       </div>
       <div class="card-body">
-        <img class="rounded img-fluid" src="<%= gravatar_url(@user, { size: 500 }) %>" alt="">
+        <% if @user.image? %>
+          <div class="thumbnail">
+            <%= image_tag @user.image.url,class: "img-fluid" %>
+          </div>
+        <% else %>
+          <div class="thumbnail">
+            <%= image_tag 'user.jpg',class: "img-fluid" %>
+          </div>
+        <% end %>
+        <% if current_user == @user %>
+          <%= link_to '画像編集',  edit_user_path(@user) %>
+        <% end %>
       </div>
     </div>
     <%= render 'relationships/follow_button', user: @user %>
+    <% if current_user == @user %>
+      <%= link_to 'アカウントを削除する', @user, method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %>
+    <% end %>
   </aside>
+  <div class="col-sm-8">
+    <% if current_user == @user %>
+      <% if current_user.follow_exchange?(@lover) %>
+       両思いとなりました！！<br>
+      左上のDateを押してchatに移り、デートの日付を決めしょう！！<br>
+      （chatの内容は自分とlikeを押した相手にしか表示されません）
+      <% else %>
+      双方がlikeを押す（両思いとなる）場合この画面に通知が届きます
+      <% end %>
+    <% end %>
+  </div>
 </div>

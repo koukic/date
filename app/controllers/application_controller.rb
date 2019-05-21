@@ -11,4 +11,5 @@ class ApplicationController < ActionController::Base
   def counts(user)
     @count_chats = user.chats.count
   end
+  config.time_zone = 'Tokyo'
 end
